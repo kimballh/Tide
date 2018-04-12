@@ -28,7 +28,7 @@ GPIO.output(RELAY, GPIO.LOW)
 GPIO.output(LED, GPIO.HIGH)
 
 FONT_SIZE = 57
-OUNCE_HEIGHT = 4.8
+OUNCE_HEIGHT = 4.7
 PRICE_HEIGHT = 2.2
 
 
@@ -92,6 +92,7 @@ class Main(wx.Frame):
         self.counter = None
         self.in_fill_st = False
         self.ShowFullScreen(True)
+        self.full_screen = True
 
     def reset_panel(self):
         self.pnl.DestroyChildren()
@@ -120,7 +121,7 @@ class Main(wx.Frame):
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
         self.cancel = wx.Button(self, label="Exit FullScreen", pos=(0, 0),
                                 size=(self.display_length / 5, self.display_height / 5))
-        self.Bind(wx.EVT_BUTTON, self.exit_fullscreen, self.cancel)
+        self.Bind(wx.EVT_BUTTON, self.toggle_fullscreen, self.cancel)
         self.move_to_2_button = wx.Button(self, label="MOVE", pos=((self.display_length / 5), 0),
                                           size=((self.display_length * (4 / 5)), self.display_height))
         self.Bind(wx.EVT_BUTTON, self.insert_card_st, self.move_to_2_button)
@@ -128,8 +129,13 @@ class Main(wx.Frame):
         # self.pnl.Bind(wx.EVT_MOUSE_EVENTS, self.insert_card_st)
         self.pnl.SetFocus()
 
-    def exit_fullscreen(self, event):
-        self.ShowFullScreen(False)
+    def toggle_fullscreen(self, event):
+        if self.full_screen:
+            self.ShowFullScreen(False)
+            self.full_screen = False
+        else:
+            self.ShowFullScreen(True)
+            self.full_screen = True
 
     def insert_card_st(self, event):
         GPIO.output(LED, GPIO.HIGH)
