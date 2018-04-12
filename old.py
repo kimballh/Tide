@@ -167,7 +167,7 @@ class Main(wx.Frame):
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
         # self.pic1.Hide()
-        font = wx.Font(75, wx.MODERN, wx.NORMAL, wx.BOLD)
+        font = wx.Font(60, wx.MODERN, wx.NORMAL, wx.BOLD)
         self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 5.2))
         self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 2.3))
         self.ounces_text.SetForegroundColour(wx.Colour(255, 255, 255))
@@ -294,8 +294,8 @@ class Main(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.thank_you_st, self.move_to_8_button)
 
     def thank_you_st(self, event):
-        self.move_to_8_button.Destroy()
-        self.reset_panel()
+        # self.move_to_8_button.Destroy()
+        self.reset_frame()
         pic = wx.ImageFromBitmap(wx.Bitmap('8 thank you.png'))
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self, -1, wx.Bitmap(pic), (0, 0))
