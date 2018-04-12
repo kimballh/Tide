@@ -72,7 +72,7 @@ class Counter (Thread):
 
 class Main(wx.Frame):
     def __init__(self, parent, title, style):
-        super(Main, self).__init__(parent, title=title, size=(wx.GetDisplaySize()/2))
+        super(Main, self).__init__(parent, title=title, size=(800, 480))
         (self.display_length, self.display_height) = self.GetSize()
         self.pnl = wx.Panel(self)
         self.pnl.SetSize(self.GetSize())
@@ -92,10 +92,17 @@ class Main(wx.Frame):
         self.pnl.SetSize(self.GetSize())
         self.pnl.SetFocus()
 
+    def reset_frame(self):
+        self.DestroyChildren()
+        self.pnl = wx.Panel(self)
+        self.pnl.SetSize(self.GetSize())
+        self.pnl.SetFocus()
+
     def welcome_st(self, event=None):
         self.amount = 0.0
         self.price = 0.0
-        self.reset_panel()
+        # self.reset_panel()
+        self.reset_frame()
         print("I'm in welcome state")
         # self.bitmap1 = wx.StaticBitmap(self, -1, wx.Bitmap('1 welcome.png'), (0,0))
         pic = wx.ImageFromBitmap(wx.Bitmap('1 welcome.png'))
@@ -160,7 +167,7 @@ class Main(wx.Frame):
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
         # self.pic1.Hide()
-        font = wx.Font(120, wx.MODERN, wx.NORMAL, wx.BOLD)
+        font = wx.Font(75, wx.MODERN, wx.NORMAL, wx.BOLD)
         self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 5.2))
         self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 2.3))
         self.ounces_text.SetForegroundColour(wx.Colour(255, 255, 255))
@@ -247,7 +254,7 @@ class Main(wx.Frame):
         self.reset_panel()
         print("I made it here")
         print("I'm in end_fill_st")
-        font = wx.Font(120, wx.MODERN, wx.NORMAL, wx.BOLD)
+        font = wx.Font(75, wx.MODERN, wx.NORMAL, wx.BOLD)
         pic = wx.ImageFromBitmap(wx.Bitmap('6 count stopped.png'))
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
@@ -273,7 +280,7 @@ class Main(wx.Frame):
         pic = wx.ImageFromBitmap(wx.Bitmap('7 receipt.png'))
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
-        font = wx.Font(120, wx.MODERN, wx.NORMAL, wx.BOLD)
+        font = wx.Font(75, wx.MODERN, wx.NORMAL, wx.BOLD)
         self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 5.2))
         self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 2.3))
         self.ounces_text.SetForegroundColour(wx.Colour(255, 255, 255))
