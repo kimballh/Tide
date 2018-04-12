@@ -146,11 +146,11 @@ class Main(wx.Frame):
 
     def card_swiped(self, event):
         GPIO.remove_event_detect(PHOTO_TRANSISTOR)
-        GPIO.output(LED, GPIO.LOW)
         wx.PostEvent(self, self.card_event)
 
 
     def place_bottle_instructions_st(self, event):
+        GPIO.output(LED, GPIO.LOW)
         self.move_to_3_button.Destroy()
         self.reset_panel()
         print("I'm in bottle_instructions_st")
