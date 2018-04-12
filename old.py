@@ -157,8 +157,8 @@ class Main(wx.Frame):
         pic = wx.ImageFromBitmap(wx.Bitmap('4 Fill instructions.png'))
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         self.pic = wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
-        # self.move_to_5_button = wx.Button(self, label="MOVE", pos=(0, 0), size=(self.display_length, self.display_height))
-        # self.Bind(wx.EVT_BUTTON, self.fill_st, self.move_to_5_button)
+        self.cancel = wx.Button(self, label="MOVE", pos=(0, 0), size=(self.display_length/5, self.display_height))
+        self.Bind(wx.EVT_BUTTON, self.welcome_st, self.cancel)
         btn = wx.Button(self)
         self.Bind(wx.EVT_BUTTON, self.fill_st, btn)
         self.fill_event = wx.PyCommandEvent(wx.EVT_BUTTON.typeId, btn.GetId())
@@ -166,6 +166,7 @@ class Main(wx.Frame):
 
     def fill_st(self, event=None):
         self.in_fill_st = True
+        self.cancel.Destroy()
         # GPIO.remove_event_detect(BUTTON)
         # self.move_to_5_button.Destroy()
         # self.reset_panel()
