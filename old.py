@@ -126,6 +126,7 @@ class Main(wx.Frame):
         self.pnl.SetFocus()
 
     def insert_card_st(self, event):
+        GPIO.output(LED, GPIO.HIGH)
         self.move_to_2_button.Destroy()
         self.reset_panel()
         print("I'm in insert card state")
@@ -138,6 +139,16 @@ class Main(wx.Frame):
         self.move_to_3_button = wx.Button(self, label="MOVE", pos=(0, 0),
                                           size=(self.display_length, self.display_height))
         self.Bind(wx.EVT_BUTTON, self.place_bottle_instructions_st, self.move_to_3_button)
+        btn = wx.Button(self)
+        self.Bind(wx.EVT_BUTTON, self.place_bottle_instructions_st, btn)
+        self.card_event = wx.PyCommandEvent(wx.EVT_BUTTON.typeId, btn.GetId())
+        GPIO.add_event_detect(PHOTO_TRANSISTOR, GPIO.RISING, callback=self.card_swiped, bouncetime=500)
+
+    def card_swiped(self, event):
+        GPIO.remove_event_detect(PHOTO_TRANSISTOR)
+        GPIO.output(LED, GPIO.LOW)
+        wx.PostEvent(self, self.card_event)
+
 
     def place_bottle_instructions_st(self, event):
         self.move_to_3_button.Destroy()
@@ -331,6 +342,7 @@ class Main(wx.Frame):
 
 
 if __name__ == '__main__':
+    # GPIO.output(LED, GPIO.HIGH)
     app = wx.App()
     Main(None, title='Tide Detergent Station', style=wx.NO_BORDER)
     app.MainLoop()
