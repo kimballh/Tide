@@ -104,6 +104,7 @@ class Main(wx.Frame):
         self.pnl.SetFocus()
 
     def welcome_st(self, event=None):
+        GPIO.remove_event_detect(BUTTON)
         self.in_fill_st = False
         self.amount = 0.0
         self.price = 0.0
