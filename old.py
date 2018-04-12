@@ -173,7 +173,7 @@ class Main(wx.Frame):
         pic = wx.ImageFromBitmap(wx.Bitmap('5 Count up.png'))
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
-        self.pic1.Hide()
+        self.pic.Hide()
         font = wx.Font(FONT_SIZE, wx.MODERN, wx.NORMAL, wx.BOLD)
         self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / OUNCE_HEIGHT))
         self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / PRICE_HEIGHT))
