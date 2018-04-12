@@ -208,7 +208,7 @@ class Main(wx.Frame):
         btn = wx.Button(self)
         self.Bind(wx.EVT_BUTTON, self.toggle_fill, btn)
         self.evt = wx.PyCommandEvent(wx.EVT_BUTTON.typeId, btn.GetId())
-        GPIO.add_event_detect(BUTTON, GPIO.BOTH, callback=self.toggle_event)
+        GPIO.add_event_detect(BUTTON, GPIO.BOTH, callback=self.toggle_event, bouncetime=500)
         self.pnl.Bind(wx.EVT_KEY_DOWN, self.toggle_fill)
 
         # while self.filling:
@@ -232,7 +232,7 @@ class Main(wx.Frame):
         # self.pnl.Bind(wx.EVT_KEY_DOWN, self.fill)
         # self.pnl.Bind(wx.EVT_KEY_DOWN, self.end_fill_st)
 
-    def toggle_event(self):
+    def toggle_event(self, event):
         wx.PostEvent(self, self.evt)
 
     def fill(self, event=None):
