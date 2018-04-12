@@ -42,7 +42,7 @@ class Counter (Thread):
 
     def run(self):
         print("open relay")
-        GPIO.output(RELAY, GPIO.HIGH)
+        GPIO.output(RELAY, GPIO.LOW)
         self.start_count(self.label1, self.label2)
         self.start_dispense()
 
@@ -73,7 +73,7 @@ class Counter (Thread):
             self.dispense()
         else:
             print("close relay")
-            GPIO.output(RELAY, GPIO.LOW)
+            GPIO.output(RELAY, GPIO.HIGH)
 
 
 class Main(wx.Frame):
@@ -194,7 +194,7 @@ class Main(wx.Frame):
         btn = wx.Button(self)
         self.Bind(wx.EVT_BUTTON, self.fill_st, btn)
         self.fill_event = wx.PyCommandEvent(wx.EVT_BUTTON.typeId, btn.GetId())
-        GPIO.add_event_detect(BUTTON, GPIO.BOTH, callback=self.toggle_event, bouncetime=150)
+        GPIO.add_event_detect(BUTTON, GPIO.BOTH, callback=self.toggle_event, bouncetime=300)
 
     def fill_st(self, event=None):
         self.in_fill_st = True
