@@ -8,24 +8,24 @@ from multiprocessing.pool import ThreadPool
 from wx.lib.pubsub import pub
 
 
-# import RPi.GPIO as GPIO
-#
-# # GPIO PINS
-# # inputs
-# BUTTON = 40
-# PHOTO_TRANSISTOR = 37
-# # outputs
-# RELAY = 38
-# LED = 12
-# GPIO.cleanup()
-# GPIO.setmode(GPIO.BOARD)
-# GPIO.setwarnings(True)
-# GPIO.setup(BUTTON, GPIO.IN)
-# GPIO.setup(PHOTO_TRANSISTOR, GPIO.IN)
-# GPIO.setup(RELAY, GPIO.OUT)
-# GPIO.setup(LED, GPIO.OUT)
-# GPIO.output(RELAY, GPIO.LOW)
-# GPIO.output(LED, GPIO.HIGH)
+import RPi.GPIO as GPIO
+
+# GPIO PINS
+# inputs
+BUTTON = 40
+PHOTO_TRANSISTOR = 37
+# outputs
+RELAY = 38
+LED = 12
+GPIO.cleanup()
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(True)
+GPIO.setup(BUTTON, GPIO.IN)
+GPIO.setup(PHOTO_TRANSISTOR, GPIO.IN)
+GPIO.setup(RELAY, GPIO.OUT)
+GPIO.setup(LED, GPIO.OUT)
+GPIO.output(RELAY, GPIO.LOW)
+GPIO.output(LED, GPIO.HIGH)
 
 FONT_SIZE = 57
 OUNCE_HEIGHT = 4.8
@@ -205,6 +205,10 @@ class Main(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.end_fill_st, self.stop_button)
 
         # GPIO.add_event_detect(BUTTON, GPIO.BOTH, callback=toggle_fill, bouncetime=500)
+        btn = wx.Button(self)
+        self.Bind(wx.EVT_BUTTON, self.toggle_fill, btn)
+        self.evt = wx.PyCommandEvent(wx.EVT_BUTTON.typeId, btn.GetId())
+        GPIO.add_event_detect(BUTTON, GPIO.BOTH, callback=self.toggle_event)
         self.pnl.Bind(wx.EVT_KEY_DOWN, self.toggle_fill)
 
         # while self.filling:
@@ -227,6 +231,9 @@ class Main(wx.Frame):
 
         # self.pnl.Bind(wx.EVT_KEY_DOWN, self.fill)
         # self.pnl.Bind(wx.EVT_KEY_DOWN, self.end_fill_st)
+
+    def toggle_event(self):
+        wx.PostEvent(self, self.evt)
 
     def fill(self, event=None):
         self.amount += 0.21
@@ -251,6 +258,7 @@ class Main(wx.Frame):
             self.filling = True
 
     def end_fill_st(self, event=None):
+        GPIO.remove_event_detect(BUTTON)
         time.sleep(.3)
         if self.filling:
             self.toggle_fill()
