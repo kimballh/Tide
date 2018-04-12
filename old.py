@@ -145,8 +145,10 @@ class Main(wx.Frame):
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
         # self.pnl.Bind(wx.EVT_MOUSE_EVENTS, self.fill_instructions_st)
-        self.move_to_4_button = wx.Button(self, label="MOVE", pos=(0, 0),
-                                          size=(self.display_length, self.display_height))
+        self.cancel = wx.Button(self, label="MOVE", pos=(0, 0), size=(self.display_length / 5, self.display_height))
+        self.Bind(wx.EVT_BUTTON, self.welcome_st, self.cancel)
+        self.move_to_4_button = wx.Button(self, label="MOVE", pos=((self.display_length / 5), 0),
+                                          size=((self.display_length * (4/5)), self.display_height))
         self.Bind(wx.EVT_BUTTON, self.fill_instructions_st, self.move_to_4_button)
 
     def fill_instructions_st(self, event):
@@ -157,8 +159,8 @@ class Main(wx.Frame):
         pic = wx.ImageFromBitmap(wx.Bitmap('4 Fill instructions.png'))
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         self.pic = wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
-        self.cancel = wx.Button(self, label="MOVE", pos=(0, 0), size=(self.display_length/5, self.display_height))
-        self.Bind(wx.EVT_BUTTON, self.welcome_st, self.cancel)
+        # self.cancel = wx.Button(self, label="MOVE", pos=(0, 0), size=(self.display_length/5, self.display_height))
+        # self.Bind(wx.EVT_BUTTON, self.welcome_st, self.cancel)
         btn = wx.Button(self)
         self.Bind(wx.EVT_BUTTON, self.fill_st, btn)
         self.fill_event = wx.PyCommandEvent(wx.EVT_BUTTON.typeId, btn.GetId())
