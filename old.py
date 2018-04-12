@@ -42,6 +42,7 @@ class Counter (Thread):
 
     def run(self):
         print("open relay")
+        GPIO.output(RELAY, GPIO.HIGH)
         self.start_count(self.label1, self.label2)
         self.start_dispense()
 
@@ -72,6 +73,7 @@ class Counter (Thread):
             self.dispense()
         else:
             print("close relay")
+            GPIO.output(RELAY, GPIO.LOW)
 
 
 class Main(wx.Frame):
