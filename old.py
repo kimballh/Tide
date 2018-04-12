@@ -250,6 +250,7 @@ class Main(wx.Frame):
         time.sleep(.3)
         if self.filling:
             self.toggle_fill()
+            time.sleep(.5)
         self.stop_button.Destroy()
         self.reset_panel()
         print("I made it here")
