@@ -194,7 +194,7 @@ class Main(wx.Frame):
         btn = wx.Button(self)
         self.Bind(wx.EVT_BUTTON, self.fill_st, btn)
         self.fill_event = wx.PyCommandEvent(wx.EVT_BUTTON.typeId, btn.GetId())
-        GPIO.add_event_detect(BUTTON, GPIO.BOTH, callback=self.toggle_event)
+        GPIO.add_event_detect(BUTTON, GPIO.BOTH, callback=self.toggle_event, bouncetime=150)
 
     def fill_st(self, event=None):
         self.in_fill_st = True
