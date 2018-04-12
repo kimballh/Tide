@@ -88,6 +88,7 @@ class Main(wx.Frame):
         # self.Maximize()
         self.filling = False
         self.counter = None
+        self.in_fill_st = False
 
     def reset_panel(self):
         self.pnl.DestroyChildren()
@@ -103,6 +104,7 @@ class Main(wx.Frame):
         self.pnl.SetFocus()
 
     def welcome_st(self, event=None):
+        self.in_fill_st = False
         self.amount = 0.0
         self.price = 0.0
         # self.reset_panel()
@@ -156,17 +158,17 @@ class Main(wx.Frame):
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
         # self.pnl.Bind(wx.EVT_MOUSE_EVENTS, self.fill_st)
-        self.move_to_5_button = wx.Button(self, label="MOVE", pos=(0, 0), size=(self.display_length, self.display_height))
-        self.Bind(wx.EVT_BUTTON, self.fill_st, self.move_to_5_button)
-
+        # self.move_to_5_button = wx.Button(self, label="MOVE", pos=(0, 0), size=(self.display_length, self.display_height))
+        # self.Bind(wx.EVT_BUTTON, self.fill_st, self.move_to_5_button)
         # GPIO.add_event_detect(BUTTON, GPIO.RISING, callback=self.fill_st, bouncetime=500)
+        GPIO.add_event_detect(BUTTON, GPIO.BOTH, callback=self.toggle_event, bouncetime=300)
 
     def fill_st(self, event=None):
+        self.in_fill_st = True
         # GPIO.remove_event_detect(BUTTON)
         self.move_to_5_button.Destroy()
         self.reset_panel()
         print("I'm in fill_st")
-
         pic = wx.ImageFromBitmap(wx.Bitmap('5 Count up.png'))
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
@@ -208,7 +210,6 @@ class Main(wx.Frame):
         btn = wx.Button(self)
         self.Bind(wx.EVT_BUTTON, self.toggle_fill, btn)
         self.evt = wx.PyCommandEvent(wx.EVT_BUTTON.typeId, btn.GetId())
-        GPIO.add_event_detect(BUTTON, GPIO.BOTH, callback=self.toggle_event, bouncetime=500)
         self.pnl.Bind(wx.EVT_KEY_DOWN, self.toggle_fill)
 
         # while self.filling:
@@ -233,7 +234,10 @@ class Main(wx.Frame):
         # self.pnl.Bind(wx.EVT_KEY_DOWN, self.end_fill_st)
 
     def toggle_event(self, event):
-        wx.PostEvent(self, self.evt)
+        if self.in_fill_st:
+            wx.PostEvent(self, self.evt)
+        else:
+            self.fill_st()
 
     def fill(self, event=None):
         self.amount += 0.21
