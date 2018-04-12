@@ -7,24 +7,24 @@ from threading import Thread
 from multiprocessing.pool import ThreadPool
 from wx.lib.pubsub import pub
 
-import RPi.GPIO as GPIO
-
-# GPIO PINS
-# inputs
-BUTTON = 40
-PHOTO_TRANSISTOR = 37
-# outputs
-RELAY = 38
-LED = 12
-GPIO.cleanup()
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(True)
-GPIO.setup(BUTTON, GPIO.IN)
-GPIO.setup(PHOTO_TRANSISTOR, GPIO.IN)
-GPIO.setup(RELAY, GPIO.OUT)
-GPIO.setup(LED, GPIO.OUT)
-GPIO.output(RELAY, GPIO.LOW)
-GPIO.output(LED, GPIO.HIGH)
+# import RPi.GPIO as GPIO
+#
+# # GPIO PINS
+# # inputs
+# BUTTON = 40
+# PHOTO_TRANSISTOR = 37
+# # outputs
+# RELAY = 38
+# LED = 12
+# GPIO.cleanup()
+# GPIO.setmode(GPIO.BOARD)
+# GPIO.setwarnings(True)
+# GPIO.setup(BUTTON, GPIO.IN)
+# GPIO.setup(PHOTO_TRANSISTOR, GPIO.IN)
+# GPIO.setup(RELAY, GPIO.OUT)
+# GPIO.setup(LED, GPIO.OUT)
+# GPIO.output(RELAY, GPIO.LOW)
+# GPIO.output(LED, GPIO.HIGH)
 
 
 class Main(wx.Frame):
@@ -40,6 +40,7 @@ class Main(wx.Frame):
         self.amount = 0.0
         self.Maximize()
         self.filling = False
+        self.ShowFullScreen(True)
 
     def reset_panel(self):
         self.pnl.DestroyChildren()
@@ -102,10 +103,10 @@ class Main(wx.Frame):
         # self.move_to_5_button = wx.Button(self, label="MOVE", pos=(0,0), size=(self.display_length, self.display_height))
         # self.Bind(wx.EVT_BUTTON, self.fill_st, self.move_to_5_button)
 
-        GPIO.add_event_detect(BUTTON, GPIO.RISING, callback=self.fill_st, bouncetime=500)
+        # GPIO.add_event_detect(BUTTON, GPIO.RISING, callback=self.fill_st, bouncetime=500)
 
     def fill_st(self, event=None):
-        GPIO.remove_event_detect(BUTTON)
+        # GPIO.remove_event_detect(BUTTON)
         # self.reset_panel()
         print("I'm in fill_st")
 

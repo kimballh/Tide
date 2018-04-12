@@ -87,10 +87,11 @@ class Main(wx.Frame):
         self.Show(True)
         self.price = 0.0
         self.amount = 0.0
-        # self.Maximize()
+        self.Maximize()
         self.filling = False
         self.counter = None
         self.in_fill_st = False
+        self.ShowFullScreen(True)
 
     def reset_panel(self):
         self.pnl.DestroyChildren()
@@ -117,17 +118,23 @@ class Main(wx.Frame):
         pic = wx.ImageFromBitmap(wx.Bitmap('1 welcome.png'))
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
-
-        self.move_to_2_button = wx.Button(self, label="MOVE", pos=(0, 0),
-                                          size=(self.display_length, self.display_height))
+        self.cancel = wx.Button(self, label="Exit FullScreen", pos=(0, 0),
+                                size=(self.display_length / 5, self.display_height / 5))
+        self.Bind(wx.EVT_BUTTON, self.exit_fullscreen, self.cancel)
+        self.move_to_2_button = wx.Button(self, label="MOVE", pos=((self.display_length / 5), 0),
+                                          size=((self.display_length * (4 / 5)), self.display_height))
         self.Bind(wx.EVT_BUTTON, self.insert_card_st, self.move_to_2_button)
         # pnl = wx.Panel(self)
         # self.pnl.Bind(wx.EVT_MOUSE_EVENTS, self.insert_card_st)
         self.pnl.SetFocus()
 
+    def exit_fullscreen(self, event):
+        self.ShowFullScreen(False)
+
     def insert_card_st(self, event):
         GPIO.output(LED, GPIO.HIGH)
         self.move_to_2_button.Destroy()
+        self.cancel.Destroy()
         self.reset_panel()
         print("I'm in insert card state")
         pic = wx.ImageFromBitmap(wx.Bitmap('2 insert card.png'))
@@ -145,12 +152,12 @@ class Main(wx.Frame):
         GPIO.add_event_detect(PHOTO_TRANSISTOR, GPIO.RISING, callback=self.card_swiped, bouncetime=500)
 
     def card_swiped(self, event):
-        GPIO.remove_event_detect(PHOTO_TRANSISTOR)
         wx.PostEvent(self, self.card_event)
 
 
     def place_bottle_instructions_st(self, event):
         GPIO.output(LED, GPIO.LOW)
+        GPIO.remove_event_detect(PHOTO_TRANSISTOR)
         self.move_to_3_button.Destroy()
         self.reset_panel()
         print("I'm in bottle_instructions_st")
