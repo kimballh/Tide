@@ -153,7 +153,10 @@ class Main(wx.Frame):
 
     def fill_instructions_st(self, event):
         self.move_to_4_button.Destroy()
+        self.cancel.Destroy()
         self.reset_panel()
+        self.cancel = wx.Button(self, label="MOVE", pos=(0, 0), size=(self.display_length / 5, self.display_height))
+        self.Bind(wx.EVT_BUTTON, self.welcome_st, self.cancel)
         print("I'm in fill_instructions_st")
         # self.bitmap1 = wx.StaticBitmap(self, -1, wx.Bitmap('3 place bottle.png'), (0,0))
         pic = wx.ImageFromBitmap(wx.Bitmap('4 Fill instructions.png'))
