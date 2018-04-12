@@ -166,7 +166,7 @@ class Main(wx.Frame):
     def fill_st(self, event=None):
         self.in_fill_st = True
         # GPIO.remove_event_detect(BUTTON)
-        self.move_to_5_button.Destroy()
+        # self.move_to_5_button.Destroy()
         self.reset_panel()
         print("I'm in fill_st")
         pic = wx.ImageFromBitmap(wx.Bitmap('5 Count up.png'))
