@@ -239,9 +239,9 @@ class Main(wx.Frame):
             self.filling = True
 
     def end_fill_st(self, event=None):
-        # if self.filling:
-        #     self.toggle_fill()
-        # self.stop_button.Destroy()
+        if self.filling:
+            self.toggle_fill()
+        self.stop_button.Destroy()
         self.reset_panel()
         print("I made it here")
         print("I'm in end_fill_st")
