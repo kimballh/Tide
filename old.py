@@ -27,7 +27,7 @@ from wx.lib.pubsub import pub
 # GPIO.output(RELAY, GPIO.LOW)
 # GPIO.output(LED, GPIO.HIGH)
 
-FONT_SIZE = 55
+FONT_SIZE = 57
 
 
 class Counter (Thread):
@@ -170,8 +170,8 @@ class Main(wx.Frame):
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
         # self.pic1.Hide()
         font = wx.Font(FONT_SIZE, wx.MODERN, wx.NORMAL, wx.BOLD)
-        self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 5.2))
-        self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 2.3))
+        self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 5.3))
+        self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 2.4))
         self.ounces_text.SetForegroundColour(wx.Colour(255, 255, 255))
         self.price_text.SetForegroundColour(wx.Colour(255, 255, 255))
         self.ounces_text.SetFont(font)
