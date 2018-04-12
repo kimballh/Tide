@@ -239,6 +239,7 @@ class Main(wx.Frame):
             self.filling = True
 
     def end_fill_st(self, event=None):
+        time.sleep(.3)
         if self.filling:
             self.toggle_fill()
         self.stop_button.Destroy()
