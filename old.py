@@ -156,23 +156,22 @@ class Main(wx.Frame):
         # self.bitmap1 = wx.StaticBitmap(self, -1, wx.Bitmap('3 place bottle.png'), (0,0))
         pic = wx.ImageFromBitmap(wx.Bitmap('4 Fill instructions.png'))
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
-        wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
-        # self.pnl.Bind(wx.EVT_MOUSE_EVENTS, self.fill_st)
-        # self.move_to_5_button = wx.Button(self, label="MOVE", pos=(0, 0), size=(self.display_length, self.display_height))
-        # self.Bind(wx.EVT_BUTTON, self.fill_st, self.move_to_5_button)
-        # GPIO.add_event_detect(BUTTON, GPIO.RISING, callback=self.fill_st, bouncetime=500)
+        self.pic = wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
+        self.move_to_5_button = wx.Button(self, label="MOVE", pos=(0, 0), size=(self.display_length, self.display_height))
+        self.Bind(wx.EVT_BUTTON, self.fill_st, self.move_to_5_button)
+        self.fill_event = wx.PyCommandEvent(wx.PyCommandEvent(wx.EVT_BUTTON.typeId, self.move_to_5_button))
         GPIO.add_event_detect(BUTTON, GPIO.BOTH, callback=self.toggle_event, bouncetime=300)
 
     def fill_st(self, event=None):
         self.in_fill_st = True
         # GPIO.remove_event_detect(BUTTON)
         # self.move_to_5_button.Destroy()
-        self.reset_panel()
+        # self.reset_panel()
         print("I'm in fill_st")
         pic = wx.ImageFromBitmap(wx.Bitmap('5 Count up.png'))
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
-        # self.pic1.Hide()
+        self.pic1.Hide()
         font = wx.Font(FONT_SIZE, wx.MODERN, wx.NORMAL, wx.BOLD)
         self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / OUNCE_HEIGHT))
         self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / PRICE_HEIGHT))
@@ -237,7 +236,7 @@ class Main(wx.Frame):
         if self.in_fill_st:
             wx.PostEvent(self, self.evt)
         else:
-            self.fill_st()
+            wx.PostEvent(self, self.fill_event)
 
     def fill(self, event=None):
         self.amount += 0.21
