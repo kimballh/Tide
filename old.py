@@ -24,8 +24,8 @@ GPIO.setup(BUTTON, GPIO.IN)
 GPIO.setup(PHOTO_TRANSISTOR, GPIO.IN)
 GPIO.setup(RELAY, GPIO.OUT)
 GPIO.setup(LED, GPIO.OUT)
-GPIO.output(RELAY, GPIO.LOW)
-GPIO.output(LED, GPIO.HIGH)
+# GPIO.output(RELAY, GPIO.LOW)
+# GPIO.output(LED, GPIO.HIGH)
 
 FONT_SIZE = 57
 OUNCE_HEIGHT = 4.55
@@ -138,7 +138,7 @@ class Main(wx.Frame):
             self.full_screen = True
 
     def insert_card_st(self, event):
-        GPIO.output(LED, GPIO.HIGH)
+        # GPIO.output(LED, GPIO.HIGH)
         self.move_to_2_button.Destroy()
         self.cancel.Destroy()
         self.reset_panel()
@@ -162,7 +162,7 @@ class Main(wx.Frame):
 
 
     def place_bottle_instructions_st(self, event):
-        GPIO.output(LED, GPIO.LOW)
+        # GPIO.output(LED, GPIO.LOW)
         GPIO.remove_event_detect(PHOTO_TRANSISTOR)
         self.move_to_3_button.Destroy()
         self.reset_panel()
