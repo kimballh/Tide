@@ -28,6 +28,8 @@ from wx.lib.pubsub import pub
 # GPIO.output(LED, GPIO.HIGH)
 
 FONT_SIZE = 57
+OUNCE_HEIGHT = 4.8
+PRICE_HEIGHT = 2.2
 
 
 class Counter (Thread):
@@ -170,8 +172,8 @@ class Main(wx.Frame):
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
         # self.pic1.Hide()
         font = wx.Font(FONT_SIZE, wx.MODERN, wx.NORMAL, wx.BOLD)
-        self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 4.8))
-        self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 2.2))
+        self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / OUNCE_HEIGHT))
+        self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / PRICE_HEIGHT))
         self.ounces_text.SetForegroundColour(wx.Colour(255, 255, 255))
         self.price_text.SetForegroundColour(wx.Colour(255, 255, 255))
         self.ounces_text.SetFont(font)
@@ -261,8 +263,8 @@ class Main(wx.Frame):
         pic = wx.ImageFromBitmap(wx.Bitmap('6 count stopped.png'))
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
-        self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 5.2))
-        self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 2.3))
+        self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / OUNCE_HEIGHT))
+        self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / PRICE_HEIGHT))
         self.ounces_text.SetForegroundColour(wx.Colour(255, 255, 255))
         self.price_text.SetForegroundColour(wx.Colour(255, 255, 255))
         self.ounces_text.SetFont(font)
@@ -284,8 +286,8 @@ class Main(wx.Frame):
         pic = pic.Scale(self.display_length, self.display_height, wx.IMAGE_QUALITY_HIGH)
         wx.StaticBitmap(self.pnl, -1, wx.Bitmap(pic), (0, 0))
         font = wx.Font(FONT_SIZE, wx.MODERN, wx.NORMAL, wx.BOLD)
-        self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 5.2))
-        self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / 2.3))
+        self.ounces_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / OUNCE_HEIGHT))
+        self.price_text = wx.StaticText(self.pnl, pos=((self.display_length / 3) * 1.85, self.display_height / PRICE_HEIGHT))
         self.ounces_text.SetForegroundColour(wx.Colour(255, 255, 255))
         self.price_text.SetForegroundColour(wx.Colour(255, 255, 255))
         self.ounces_text.SetFont(font)
