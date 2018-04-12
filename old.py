@@ -55,12 +55,12 @@ class Counter (Thread):
         self.count_one(label1, label2)
 
     def count_one(self, label1, label2):
-        self.ounces += .13
+        self.ounces += .23
         # label1.SetLabelText("%05.2f" % self.ounces)
         wx.CallAfter(label1.SetLabelText, "%05.2f" % self.ounces)
         # label2.SetLabelText("%05.2f" % (self.ounces/10))
         wx.CallAfter(label2.SetLabelText, "%05.2f" % (self.ounces/10))
-        time.sleep(.3)
+        time.sleep(.2)
         if self.filling:
             self.count_one(label1, label2)
 
